@@ -10,6 +10,15 @@ const client = new OAuth2Client(process.env.CLIENT_ID);
 
 app.post('/login', (req, res) => {
 
+    let dateObj = new Date();
+    let month = dateObj.getUTCMonth() + 1; //months from 1-12
+    let day = dateObj.getUTCDate();
+    let year = dateObj.getUTCFullYear();
+
+    let newdate = year + "/" + month + "/" + day;
+    console.log('---------------- ', Math.floor(Math.random() * (1000000 - 10)) + 10 );
+    console.log('POST /login -> ', newdate);
+    console.log(req.query);
     let body = req.query;
 
     Usuario.findOne({ correo : body.correo }, (err,usuarioDB)=>{
