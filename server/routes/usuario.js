@@ -59,7 +59,7 @@ app.post('/usuario' , (req, res) => {
             });
         }
 
-        res.json({
+        return res.json({
             ok:true,
             usuario: usuarioDB
         });
