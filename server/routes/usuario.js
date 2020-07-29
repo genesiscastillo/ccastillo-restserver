@@ -3,11 +3,15 @@ const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
-const server = express();
+const { verificaToken , verificaAutorizacionAdmin} = require('../middlewares/autenticacion');
 
-//server.use( express.json());
+const app = express();
 
-server.get('/usuario', (req, res) => {
+//app.use( express.json());
+
+app.get('/usuario', verificaToken , (req, res) => {
+
+
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
@@ -33,7 +37,7 @@ server.get('/usuario', (req, res) => {
     });
 });
 
-server.post('/usuario', (req, res) => {
+app.post('/usuario', [verificaToken, verificaAutorizacionAdmin ],(req, res) => {
     console.log('------------------------------------');
     console.log('query', JSON.stringify(req.query));
     console.log('body', JSON.stringify(req.body));
@@ -61,7 +65,7 @@ server.post('/usuario', (req, res) => {
     });
 });
 
-server.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verificaToken, verificaAutorizacionAdmin]  ,(req, res) => {
     let id = req.params.id;
     let body = _.pick(req.query , ['nombre' , 'correo', 'img', 'role' , 'estado']);
 
@@ -80,7 +84,7 @@ server.put('/usuario/:id', (req, res) => {
     });
 });
 
-server.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', [verificaToken, verificaAutorizacionAdmin] ,(req, res) => {
     let id = req.params.id;
     console.log(`id a borrar =  ${id} `)
     Usuario.findOneAndDelete( id , (err, usuarioBorrado)=>{
@@ -104,4 +108,4 @@ server.delete('/usuario/:id', (req, res) => {
     })
 });
 
-module.exports = server;
+module.exports = app;

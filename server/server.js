@@ -1,12 +1,16 @@
 require('./config/config');
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 
-const server = express();
+const app = express();
 
-server.use( express.json());
+app.use( express.json());
 
-server.use(require('./routes/usuario'));
+//Habilitar la carpeta public
+app.use( express.static( path.resolve(__dirname ,'../public')));
+
+app.use(require('./routes/index'));
 
 console.log('CONECTADO A ',process.env.URLDB);
 
@@ -18,6 +22,6 @@ mongoose.connect( process.env.URLDB ,
     console.log('Bse datos ONLINE');
 });
 
-server.listen( process.env.PORT,() => {
+app.listen( process.env.PORT,() => {
     console.log(`Escuchando ${ process.env.PORT } -v2.0  Servidor listo..!!!`);
 });
