@@ -20,7 +20,8 @@ app.get('/test', (req, res) => {
         ok: true,
         fecha: newdate
     });
-}
+});
+
 app.post('/login', (req, res) => {
 
     let dateObj = new Date();
