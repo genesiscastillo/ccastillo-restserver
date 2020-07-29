@@ -37,7 +37,8 @@ app.get('/usuario', verificaToken , (req, res) => {
     });
 });
 
-app.post('/usuario', [verificaToken, verificaAutorizacionAdmin ],(req, res) => {
+//app.post('/usuario', [verificaToken, verificaAutorizacionAdmin ],(req, res) => {
+app.post('/usuario' , (req, res) => {
     console.log('------------------------------------');
     console.log('query', JSON.stringify(req.query));
     console.log('body', JSON.stringify(req.body));

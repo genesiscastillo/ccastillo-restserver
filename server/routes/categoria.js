@@ -91,6 +91,7 @@ app.get('/categoria/:id', (req,res)=>   {
 app.get('/categoria', (req,res)=>   {
 
     Categoria.find({})
+        .populate('usuario')
         .exec((err, categorias)=>{
             if(err) {
                 return res.status(400).json({
