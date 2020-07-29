@@ -8,6 +8,19 @@ const app = express();
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
+app.get('/test', (req, res) => {
+    let dateObj = new Date();
+    let month = dateObj.getUTCMonth() + 1; //months from 1-12
+    let day = dateObj.getUTCDate();
+    let year = dateObj.getUTCFullYear();
+
+    let newdate = "testing ->"+year + "/" + month + "/" + day;
+
+    return res.json({
+        ok: true,
+        fecha: newdate
+    });
+}
 app.post('/login', (req, res) => {
 
     let dateObj = new Date();
